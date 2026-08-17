@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Local Document AI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+/* ==========================================================
+   RESET + BACKGROUND + MAIN LAYOUT
+========================================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+html { scroll-behavior: smooth; }
+body {
+    min-height: 100vh; overflow: hidden; display: flex; justify-content: center;
+    align-items: center; color: #ffffff; position: relative;
+    background: linear-gradient(135deg, #020617, #0f172a, #111827, #1e3a8a);
+}
+
+/* Animated Background */
+.background { position: fixed; inset: 0; overflow: hidden; z-index: -2; }
+.circle { position: absolute; border-radius: 50%; filter: blur(80px); animation: float 12s ease-in-out infinite; }
+.circle1 { width: 320px; height: 320px; background: #2563eb; top: -60px; left: -60px; opacity: .35; }
+.circle2 { width: 260px; height: 260px; background: #06b6d4; bottom: -70px; right: -50px; opacity: .30; animation-delay: 2s; }
+.circle3 { width: 180px; height: 180px; background: #3b82f6; top: 40%; left: 65%; opacity: .20; animation-delay: 4s; }
+.circle4 { width: 220px; height: 220px; background: #38bdf8; top: 20%; right: 18%; opacity: .15; animation-delay: 6s; }
+
+/* Background Grid */
+body::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 45px 45px;
+}
+
+/* Login Container & Glass Card */
+.login-container { width: 100%; display: flex; justify-content: center; align-items: center; padding: 30px; }
+.login-card {
+    width: 100%; max-width: 460px; padding: 45px; border-radius: 28px;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 20px 60px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.12);
+    animation: fadeUp .8s ease; position: relative; overflow: hidden;
+}
+.login-card::before {
+    content: ""; position: absolute; inset: 0; border-radius: 28px;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,.08), transparent);
+    transform: translateX(-120%); transition: 1s; pointer-events: none;
+}
+.login-card:hover::before { transform: translateX(120%); }
+
+/* ==========================================================
+   LOGO + HEADER + ERROR BOX
+========================================================== */
+.logo { display: flex; justify-content: center; margin-bottom: 25px; }
+.logo-circle {
+    width: 95px; height: 95px; border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #06b6d4); display: flex;
+    justify-content: center; align-items: center; font-size: 42px; color: #ffffff;
+    box-shadow: 0 20px 45px rgba(37,99,235,.45); animation: floatLogo 4s ease-in-out infinite;
+}
+.logo-circle:hover { transform: scale(1.08) rotate(8deg); transition: .35s; }
+
+.login-card h1 {
+    text-align: center; font-size: 34px; font-weight: 800; margin-bottom: 10px;
+    background: linear-gradient(90deg, #ffffff, #60a5fa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.subtitle { text-align: center; color: #cbd5e1; line-height: 1.7; margin-bottom: 35px; font-size: 15px; }
+.subtitle strong { color: #60a5fa; font-weight: 700; }
+
+.error-box {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 25px; padding: 14px 18px;
+    border-radius: 14px; background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.30);
+    color: #fecaca; font-size: 14px; animation: shake .5s ease;
+}
+.error-box i { color: #ef4444; font-size: 18px; }
+
+/* ==========================================================
+   INPUT FIELDS
+========================================================== */
+.form-group { margin-bottom: 24px; }
+.form-group label { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: #cbd5e1; font-size: 14px; font-weight: 600; }
+.form-group label i { color: #60a5fa; width: 18px; text-align: center; }
+.form-group input {
+    width: 100%; height: 56px; padding: 0 18px; border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06);
+    color: #ffffff; font-size: 15px; outline: none; transition: .35s;
+}
+.form-group input::placeholder { color: #94a3b8; }
+.form-group input:hover { border-color: rgba(96,165,250,.5); }
+.form-group input:focus {
+    border-color: #3b82f6; background: rgba(255,255,255,.10);
+    box-shadow: 0 0 0 4px rgba(59,130,246,.15), 0 0 25px rgba(59,130,246,.20);
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px rgba(255,255,255,.06) inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.password-box { position: relative; }
+.password-box input { padding-right: 60px; }
+.toggle-password {
+    position: absolute; top: 50%; right: 12px; transform: translateY(-50%);
+    width: 42px; height: 42px; border: none; border-radius: 10px; background: transparent;
+    color: #94a3b8; cursor: pointer; transition: .3s; display: flex;
+    justify-content: center; align-items: center; font-size: 18px;
+}
+.toggle-password:hover { background: rgba(255,255,255,.10); color: #60a5fa; }
+.toggle-password:active { transform: translateY(-50%) scale(.92); }
+
+/* ==========================================================
+   OPTIONS + LOGIN BUTTON
+========================================================== */
+.options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+.remember-me { display: flex; align-items: center; gap: 10px; cursor: pointer; color: #cbd5e1; font-size: 14px; user-select: none; }
+.remember-me input { width: 18px; height: 18px; accent-color: #3b82f6; cursor: pointer; }
+.forgot-password { color: #60a5fa; text-decoration: none; font-size: 14px; font-weight: 600; transition: .3s; }
+.forgot-password:hover { color: #93c5fd; text-decoration: underline; }
+
+.login-btn {
+    width: 100%; height: 58px; border: none; border-radius: 16px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6, #06b6d4);
+    color: #ffffff; font-size: 16px; font-weight: 700; cursor: pointer; display: flex;
+    justify-content: center; align-items: center; gap: 12px; transition: .35s;
+    box-shadow: 0 15px 35px rgba(37,99,235,.35);
+}
+.login-btn:hover { transform: translateY(-4px); box-shadow: 0 22px 45px rgba(37,99,235,.45); }
+.login-btn:active { transform: scale(.97); }
+.login-btn i { transition: .35s; }
+.login-btn:hover i { transform: translateX(6px); }
+.login-btn.loading { pointer-events: none; opacity: .85; }
+.login-btn.loading i { animation: spinButton 1s linear infinite; }
+
+/* ==========================================================
+   DIVIDER + FEATURES + FOOTER
+========================================================== */
+.divider { display: flex; align-items: center; justify-content: center; margin: 30px 0 25px; position: relative; }
+.divider::before, .divider::after { content: ""; position: absolute; width: 32%; height: 1px; background: rgba(255,255,255,.12); }
+.divider::before { left: 0; } .divider::after { right: 0; }
+.divider span { padding: 0 15px; font-size: 13px; color: #94a3b8; background: rgba(15,23,42,.45); border-radius: 20px; }
+
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+.feature {
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 16px;
+    padding: 16px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; transition: .35s; cursor: default; backdrop-filter: blur(10px);
+    animation: fadeFeature .8s ease forwards; opacity: 0;
+}
+.feature:nth-child(1) { animation-delay: .2s; }
+.feature:nth-child(2) { animation-delay: .4s; }
+.feature:nth-child(3) { animation-delay: .6s; }
+.feature:hover {
+    transform: translateY(-6px); border-color: rgba(59,130,246,.35);
+    background: rgba(59,130,246,.08); box-shadow: 0 15px 30px rgba(37,99,235,.18);
+}
+.feature i { font-size: 24px; color: #60a5fa; transition: .35s; }
+.feature:hover i { transform: scale(1.18); color: #93c5fd; }
+.feature span { color: #e2e8f0; font-size: 13px; text-align: center; font-weight: 600; line-height: 1.4; }
+
+.login-footer { margin-top: 20px; text-align: center; color: #94a3b8; font-size: 13px; line-height: 1.8; }
+.login-footer strong { color: #60a5fa; font-weight: 700; }
+.login-footer a { color: #60a5fa; text-decoration: none; transition: .3s; }
+.login-footer a:hover { color: #93c5fd; }
+
+/* ==========================================================
+   TOAST NOTIFICATIONS (Added)
+========================================================== */
+.toast {
+    position: fixed; bottom: 20px; right: 20px; padding: 15px 25px; background: rgba(15,23,42,.95);
+    border-radius: 12px; color: white; display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.15);
+    transform: translateY(100px); opacity: 0; transition: .4s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 1000;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast i { font-size: 20px; }
+.toast i.fa-circle-check { color: #22c55e; }
+.toast i.fa-circle-info { color: #3b82f6; }
+
+/* ==========================================================
+   ANIMATIONS & RESPONSIVE
+========================================================== */
+@keyframes float { 0% { transform: translateY(0px) translateX(0px); } 25% { transform: translateY(-25px) translateX(15px); } 50% { transform: translateY(-10px) translateX(-20px); } 75% { transform: translateY(20px) translateX(12px); } 100% { transform: translateY(0px) translateX(0px); } }
+@keyframes floatLogo { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 50% { transform: translateX(6px); } 75% { transform: translateX(-4px); } }
+@keyframes spinButton { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes fadeFeature { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 20px; }
+::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+::selection { background: #2563eb; color: white; }
+
+@media (max-width: 768px) {
+    .login-container { padding: 20px; }
+    .login-card { padding: 35px 25px; max-width: 100%; }
+    .login-card h1 { font-size: 28px; }
+    .subtitle { font-size: 14px; }
+    .features { grid-template-columns: 1fr; gap: 12px; }
+    .options { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .login-btn { height: 54px; font-size: 15px; }
+}
+
+@media (max-width: 480px) {
+    .logo-circle { width: 80px; height: 80px; font-size: 34px; }
+    .login-card { padding: 28px 18px; border-radius: 20px; }
+    .login-card h1 { font-size: 24px; }
+    .subtitle { font-size: 13px; }
+    .feature { padding: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="background">
+    <span class="circle circle1"></span>
+    <span class="circle circle2"></span>
+    <span class="circle circle3"></span>
+    <span class="circle circle4"></span>
+</div>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="logo">
+            <div class="logo-circle">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+        </div>
+
+        <h1>Welcome Back</h1>
+        <p class="subtitle">
+            Sign in to continue to your
+            <strong>Local Document AI</strong>
+        </p>
+
+        {% if error %}
+        <div class="error-box">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form action="/login" method="POST" id="loginForm">
+            <div class="form-group">
+                <label><i class="fa-regular fa-user"></i> Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-lock"></i> Password</label>
+                <div class="password-box">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+            </div>
+            <div class="options">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <span>Remember Me</span>
+                </label>
+                <a href="javascript:void(0)" onclick="toggleForms('forgotForm')" class="forgot-password">Forgot Password?</a>
+            </div>
+            <button type="submit" class="login-btn"><i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In</button>
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="javascript:void(0)" onclick="toggleForms('registerForm')" style="color: #60a5fa; font-size: 14px; text-decoration: none;">Don't have an account? Sign Up</a>
+            </div>
+        </form>
+
+        <form action="/register" method="POST" id="registerForm" style="display: none;">
+            <div class="form-group">
+                <label><i class="fa-regular fa-user"></i> Choose Username</label>
+                <input type="text" name="new_username" placeholder="Create a username" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-lock"></i> Create Password</label>
+                <input type="password" name="new_password" placeholder="Create a password" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-shield-halved"></i> Security Question</label>
+                <input type="text" name="security_q" placeholder="e.g. What is your pet's name?" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-key"></i> Security Answer</label>
+                <input type="text" name="security_a" placeholder="Your answer (used for recovery)" required>
+            </div>
+            <button type="submit" class="login-btn" style="background: linear-gradient(135deg, #22c55e, #16a34a);"><i class="fa-solid fa-user-plus"></i> Create Account</button>
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="javascript:void(0)" onclick="toggleForms('loginForm')" style="color: #94a3b8; font-size: 14px; text-decoration: none;">Back to Login</a>
+            </div>
+        </form>
+
+        <form action="/reset_password" method="POST" id="forgotForm" style="display: none;">
+            <div class="form-group">
+                <label><i class="fa-regular fa-user"></i> Verify Username</label>
+                <input type="text" name="reset_username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-key"></i> Security Answer</label>
+                <input type="text" name="reset_answer" placeholder="Answer to your security question" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-lock"></i> New Password</label>
+                <input type="password" name="reset_password" placeholder="Enter new password" required>
+            </div>
+            <button type="submit" class="login-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);"><i class="fa-solid fa-unlock-keyhole"></i> Reset Password</button>
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="javascript:void(0)" onclick="toggleForms('loginForm')" style="color: #94a3b8; font-size: 14px; text-decoration: none;">Back to Login</a>
+            </div>
+        </form>
+        <div class="divider">
+            <span>Secure Offline AI Workspace</span>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Secure Login</span>
+            </div>
+            <div class="feature">
+                <i class="fa-solid fa-file-pdf"></i>
+                <span>PDF AI Chat</span>
+            </div>
+            <div class="feature">
+                <i class="fa-solid fa-brain"></i>
+                <span>Offline AI</span>
+            </div>
+        </div>
+
+        <div class="login-footer">
+            <p>Powered by <strong>Local Document AI</strong></p>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ==========================================================
+   LOGIN JAVASCRIPT & FEATURES
+========================================================== */
+
+/* -------------------------
+   Toast Notification Helper
+--------------------------*/
+function showToast(message, type="success") {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerHTML = `
+        <i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-info'}"></i>
+        <span>${message}</span>
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add("show"), 100);
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 400);
+    }, 3000);
+}
+
+/* -------------------------
+   Show / Hide Password
+--------------------------*/
+const passwordInput = document.getElementById("password");
+const togglePassword = document.getElementById("togglePassword");
+
+if(togglePassword) {
+    togglePassword.addEventListener("click", function() {
+        if(passwordInput.type === "password"){
+            passwordInput.type = "text";
+            this.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+        } else {
+            passwordInput.type = "password";
+            this.innerHTML = '<i class="fa-solid fa-eye"></i>';
+        }
+    });
+}
+
+/* -------------------------
+   Remember Username & Form Submission
+--------------------------*/
+const loginForm = document.getElementById("loginForm");
+const loginButton = document.querySelector(".login-btn");
+const usernameInput = document.getElementById("username");
+const remember = document.getElementById("remember");
+let submitting = false;
+
+if(localStorage.getItem("rememberUsername")) {
+    usernameInput.value = localStorage.getItem("rememberUsername");
+    remember.checked = true;
+}
+
+if(loginForm) {
+    loginForm.addEventListener("submit", function(e) {
+        if(submitting) {
+            e.preventDefault();
+            return;
+        }
+        submitting = true;
+
+        if(remember.checked) {
+            localStorage.setItem("rememberUsername", usernameInput.value);
+        } else {
+            localStorage.removeItem("rememberUsername");
+        }
+
+        // Loading state
+        loginButton.classList.add("loading");
+        loginButton.innerHTML = `<i class="fa-solid fa-spinner"></i> Signing In...`;
+        document.body.style.transition = "all .5s";
+        document.body.style.opacity = ".96";
+    });
+}
+
+/* -------------------------
+   Enter Key Support
+--------------------------*/
+document.addEventListener("keydown", function(e) {
+    if(e.key === "Enter" && document.activeElement.tagName === "INPUT"){
+        loginForm.requestSubmit();
+    }
+    // Shortcut to focus username
+    if(e.ctrlKey && e.key === "l"){
+        e.preventDefault();
+        usernameInput.focus();
+    }
+});
+
+/* -------------------------
+   Input Animation
+--------------------------*/
+document.querySelectorAll("input").forEach(function(input){
+    input.addEventListener("focus", function(){
+        this.parentElement.style.transform = "translateY(-2px)";
+    });
+    input.addEventListener("blur", function(){
+        this.parentElement.style.transform = "";
+    });
+    // Glow effect
+    input.addEventListener("input", function(){
+        this.style.boxShadow = "0 0 20px rgba(59,130,246,.25)";
+    });
+    input.addEventListener("blur", function(){
+        this.style.boxShadow = "";
+    });
+});
+
+/* -------------------------
+   Welcome Message & Status
+--------------------------*/
+window.addEventListener("load", () => {
+    const hour = new Date().getHours();
+    let greeting = "Welcome";
+    if(hour < 12) greeting = "Good Morning";
+    else if(hour < 17) greeting = "Good Afternoon";
+    else greeting = "Good Evening";
+    
+    showToast(greeting + " 👋");
+    console.log("%c🤖 Local Document AI Login Ready", "font-size:18px;color:#3b82f6;font-weight:bold;");
+    console.log("%cSecure Offline Authentication Loaded", "color:#22c55e;font-size:14px;");
+});
+
+/* -------------------------
+   Caps Lock Detection
+--------------------------*/
+passwordInput.addEventListener("keyup", function(e){
+    if(e.getModifierState("CapsLock")){
+        showToast("Caps Lock is ON", "info");
+    }
+});
+
+/* -------------------------
+   Card Tilt Effect
+--------------------------*/
+const loginCard = document.querySelector(".login-card");
+loginCard.addEventListener("mousemove", function(e){
+    const rect = this.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateX = (y - rect.height/2) / 18;
+    const rotateY = (rect.width/2 - x) / 18;
+    this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
+loginCard.addEventListener("mouseleave", function(){
+    this.style.transform = "perspective(1000px) rotateX(0) rotateY(0)";
+});
+
+/* -------------------------
+   Network Status & Random Tips
+--------------------------*/
+function updateNetwork(){
+    if(navigator.onLine) showToast("Connected", "success");
+    else showToast("Offline Mode", "info");
+}
+window.addEventListener("online", updateNetwork);
+window.addEventListener("offline", updateNetwork);
+
+const tips = [
+    "🔒 Your documents stay on your computer.",
+    "📄 Upload PDFs to chat with them.",
+    "🤖 Local AI works completely offline.",
+    "⚡ Faster responses after indexing.",
+    "💡 Use Remember Me for quicker login."
+];
+setInterval(function(){
+    const random = tips[Math.floor(Math.random() * tips.length)];
+    showToast(random, "info");
+}, 45000);
+
+/* -------------------------
+   Idle Detection
+--------------------------*/
+let idleTimer;
+function resetIdle(){
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function(){
+        showToast("💤 Session idle for 5 minutes", "info");
+    }, 300000);
+}
+["mousemove","keydown","click","scroll"].forEach(function(event){
+    document.addEventListener(event, resetIdle);
+});
+resetIdle();
+
+/* -------------------------
+   Background Animation Enhancements
+--------------------------*/
+document.querySelectorAll(".circle").forEach(function(circle, index){
+    circle.style.animationDuration = (10 + index * 3) + "s";
+});
+
+setInterval(function(){
+    document.querySelectorAll(".circle").forEach(function(circle){
+        circle.style.opacity = (0.15 + Math.random() * 0.25);
+    });
+}, 2500);
+
+/* -------------------------
+   Toggle Forms (Login / Register / Forgot)
+--------------------------*/
+function toggleForms(targetFormId) {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('forgotForm').style.display = 'none';
+    
+    document.getElementById(targetFormId).style.display = 'block';
+    
+    // Change Title based on form
+    const title = document.querySelector('h1');
+    if(targetFormId === 'loginForm') title.innerText = "Welcome Back";
+    if(targetFormId === 'registerForm') title.innerText = "Create Account";
+    if(targetFormId === 'forgotForm') title.innerText = "Reset Password";
+}
+</script>
+</body>
+</html>
