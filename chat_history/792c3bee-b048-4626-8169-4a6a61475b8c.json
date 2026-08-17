@@ -1,0 +1,25 @@
+{
+    "id": "792c3bee-b048-4626-8169-4a6a61475b8c",
+    "title": "Project_DataTesting.pdf",
+    "created": "2026-07-28T13:00:42.037878",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Explain about data structure",
+            "source": null,
+            "time": "13:00"
+        },
+        {
+            "role": "assistant",
+            "content": " A data structure is a specialized format for organizing, processing, retrieving, and storing data in a computer. It's like different types of organizational furniture that help manage data efficiently based on the specific requirements of an application. Data structures can be divided into two main categories: Linear and Non-Linear.\n\n1. Linear Data Structures: In these structures, data elements are arranged sequentially or linearly, where each element is attached to its previous and next adjacent elements. Examples include Arrays, Linked Lists, Stacks, and Queues.\n\n   - Arrays: The most basic data structure that stores a collection of items of the same type in contiguous memory locations.\n   - Linked Lists: Elements are not stored in contiguous memory. Each node contains the data itself and a pointer to the next node in the sequence, making it fast for adding or removing elements but slow for searching.\n   - Stacks: A Last In, First Out (LIFO) structure where you can only add or remove items from the very top, like a stack of plates at a buffet.\n   - Queues: A First In, First Out (FIFO) structure where you add items to the back and remove them from the front, like waiting in line for concert tickets.\n\n2. Non-Linear Data Structures: In these structures, data elements are not arranged sequentially but are arranged in a hierarchical or interconnected manner. An example is Trees, which contain nodes connected by edges, with the top node called the \"root,\" branching down to child nodes ending in leaf nodes. A Binary Search Tree is a popular variation where left children are smaller than the parent, and right children are larger, making searching incredibly efficient.",
+            "source": "Page 1",
+            "time": "13:01"
+        },
+        {
+            "role": "assistant",
+            "content": " A data structure is a specialized format for organizing, processing, retrieving, and storing data in a computer. It's like different types of organizational furniture that help manage data efficiently based on the specific requirements of an application. Data structures can be divided into two main categories: Linear and Non-Linear.\n\n1. Linear Data Structures: In these structures, data elements are arranged sequentially or linearly, where each element is attached to its previous and next adjacent elements. Examples include Arrays, Linked Lists, Stacks, and Queues.\n\n   - Arrays: The most basic data structure that stores a collection of items of the same type in contiguous memory locations.\n   - Linked Lists: Elements are not stored in contiguous memory. Each node contains the data itself and a pointer to the next node in the sequence, making it fast for adding or removing elements but slow for searching.\n   - Stacks: A Last In, First Out (LIFO) structure where you can only add or remove items from the very top, like a stack of plates at a buffet.\n   - Queues: A First In, First Out (FIFO) structure where you add items to the back and remove them from the front, like waiting in line for concert tickets.\n\n2. Non-Linear Data Structures: In these structures, data elements are not arranged sequentially but are arranged in a hierarchical or interconnected manner. An example is Trees, which contain nodes connected by edges, with the top node called the \"root,\" branching down to child nodes ending in leaf nodes. A Binary Search Tree is a popular variation where left children are smaller than the parent, and right children are larger, making searching incredibly efficient.",
+            "source": "Page 1",
+            "time": "13:03"
+        }
+    ]
+}

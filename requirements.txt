@@ -1,0 +1,13 @@
+Flask==3.1.0
+requests==2.32.3
+chromadb==1.0.15
+sentence-transformers==5.0.0
+pypdf==5.7.0
+torch
+numpy
+scikit-learn
+tqdm
+huggingface-hub
+transformers
+python-dotenv
+python-docx

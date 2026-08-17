@@ -1,0 +1,20 @@
+{
+    "id": "e93e0d84-7dbd-42dd-ae81-4a1775f45c4b",
+    "user_id": 1,
+    "title": "Testing_doc_0.2.pdf",
+    "created": "2026-08-11T12:38:12.623565",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Explain about Java",
+            "source": null,
+            "time": "12:38"
+        },
+        {
+            "role": "assistant",
+            "content": " Java is a programming language created by James Gosling at Sun Microsystems in 1995. It was designed to address some of the issues associated with C and C++, particularly platform dependence and memory management. The key characteristics of Java include \"Write Once, Run Anywhere\" (WORA), Automatic Garbage Collection, and Strictly Object-Oriented nature.\n\n1. \"Write Once, Run Anywhere\" (WORA) means that once a Java program is compiled, it turns into bytecode which can be run on any device with a Java Virtual Machine (JVM) installed, making it platform independent.\n\n2. Automatic Garbage Collection eliminates the need for manual memory management, reducing bugs common in C/C++.\n\n3. Java is strictly object-oriented, meaning everything belongs to a class or object and enforces a very rigid, organized structure.\n\nJava's primary use cases are enterprise-level backend systems (like banking software and massive web servers), native Android mobile applications, and large-scale data processing tools. The vibe of using Java is similar to driving a modern, high-end automatic SUV - it's safe, has built-in guardrails, can handle complex tasks, but you can't manually adjust the engine while driving.",
+            "source": "Testing_doc_0.2.docx (Page: Word Document), Testing_doc_0.2.pdf (Page: 2), Testing_doc_0.2.pdf (Page: Page 2)",
+            "time": "12:41"
+        }
+    ]
+}

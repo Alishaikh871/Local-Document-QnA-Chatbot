@@ -1,0 +1,19 @@
+{
+    "id": "f6e0a7e6-dd79-4df8-9654-3ccee79a00e9",
+    "title": "Testing_doc_0.2.pdf",
+    "created": "2026-08-06T12:20:23.531677",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Explain about java",
+            "source": null,
+            "time": "12:20"
+        },
+        {
+            "role": "assistant",
+            "content": " Java is a programming language created by James Gosling at Sun Microsystems in 1995. It was designed to address some of the issues associated with C and C++, particularly platform dependence and memory management. Java compiles into \"bytecode\" which can run on any device that has a Java Virtual Machine (JVM) installed, making it \"Write Once, Run Anywhere.\" The JVM also includes automatic garbage collection, eliminating the need for manual memory management and reducing common bugs in C/C++. Java is strictly object-oriented, enforcing a rigid, organized structure with everything belonging to a class or object. Primary use cases include enterprise-level backend systems (such as banking software and massive web servers), native Android mobile applications, and large-scale data processing tools. The vibe of using Java is similar to driving a modern, high-end automatic SUV - it's safe, has built-in guardrails, and can navigate various terrains, but you cannot open the hood and tweak the engine while driving.",
+            "source": "Testing_doc_0.2.docx (Page: Word Document), Testing_doc_0.2.pdf (Page: 2), Testing_doc_0.2.pdf (Page: Page 2)",
+            "time": "12:22"
+        }
+    ]
+}

@@ -1,0 +1,212 @@
+=========================================================
+OFFLINE LOCAL QnA CHATBOT SETUP PROCEDURE
+(Flask + Ollama + ChromaDB + Mistral)
+=========================================================
+
+STEP 1: Install Python 3.11
+---------------------------
+Download Python 3.11 from:
+https://www.python.org/downloads/
+
+During installation:
+✓ Add Python to PATH
+
+Verify installation:
+
+python --version
+        OR
+py --version
+
+Expected:
+Python 3.11.x
+
+
+=========================================================
+
+STEP 2: Open Project Folder
+---------------------------
+
+Open Command Prompt.
+
+Navigate to your project folder:
+
+cd "C:\Users\Ali Sameer Shaikh\OneDrive\Desktop\Local QnA ChatBot"
+
+=========================================================
+
+STEP 3: Create Virtual Environment
+----------------------------------
+
+python -m venv venv
+        OR
+py -m venv venv 
+
+This creates a folder named:
+
+venv
+
+=========================================================
+
+STEP 4: Activate Virtual Environment
+------------------------------------
+
+Windows:
+
+venv\Scripts\activate
+
+Expected:
+
+(venv)
+C:\Users\Ali Sameer Shaikh\OneDrive\Desktop\Local QnA ChatBot>
+
+=========================================================
+
+STEP 5: Upgrade pip
+-------------------
+
+python -m pip install --upgrade pip
+
+=========================================================
+
+STEP 6: Install Required Libraries
+----------------------------------
+
+If requirements.txt exists:
+
+pip install -r requirements.txt
+
+Otherwise install manually:
+
+pip install Flask
+pip install requests
+pip install pypdf
+pip install chromadb
+pip install sentence-transformers
+pip install torch
+pip install transformers
+pip install huggingface-hub
+pip install numpy
+pip install scikit-learn
+pip install Werkzeug
+
+=========================================================
+
+STEP 7: Install Ollama
+----------------------
+
+Download from:
+
+https://ollama.com/download
+
+Install normally.
+
+=========================================================
+
+STEP 8: Download Mistral Model
+------------------------------
+
+(Only once)
+
+ollama pull mistral
+
+=========================================================
+
+STEP 9: Verify Installed Models
+-------------------------------
+
+    ollama list
+
+Expected:
+
+NAME        SIZE
+
+mistral     4.1 GB
+
+=========================================================
+
+STEP 10: Start Ollama
+---------------------
+
+If Ollama is not already running:
+
+ollama serve
+
+If already running, skip this step.
+
+=========================================================
+
+STEP 11: Run Flask Application
+------------------------------
+
+Open another Command Prompt.
+
+Go to the project folder:
+
+cd "C:\Users\Ali Sameer Shaikh\OneDrive\Desktop\Local QnA ChatBot"
+
+Activate virtual environment:
+
+venv\Scripts\activate
+
+Run:
+
+python app.py
+        OR 
+py app.py
+
+Expected Output:
+
+============================================================
+LOCAL DOCUMENT AI CHATBOT
+============================================================
+Flask Server : http://127.0.0.1:5000
+Login Page   : http://127.0.0.1:5000/login
+============================================================
+
+=========================================================
+
+STEP 12: Open Browser
+---------------------
+
+http://127.0.0.1:5000/login
+
+=========================================================
+
+STEP 13: Login
+--------------
+
+Username : admin
+
+Password : password
+
+=========================================================
+
+STEP 14: Upload PDF
+-------------------
+
+Click Upload Document.
+
+Choose any PDF.
+
+Wait until indexing completes.
+
+=========================================================
+
+STEP 15: Ask Questions
+----------------------
+
+Example:
+
+What is Artificial Intelligence?
+
+The chatbot will:
+
+• Read the PDF
+• Split it into chunks
+• Generate embeddings
+• Store embeddings in ChromaDB
+• Search relevant chunks
+• Send context to Ollama
+• Generate an answer
+• Display page citations
+
