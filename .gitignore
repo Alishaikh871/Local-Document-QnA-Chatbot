@@ -1,2 +1,9 @@
 venv/
 __pycache__/
+#Database & User Data
+user.db
+chrma_db/
+
+#Dynamic Files
+uploads/
+chat_history/
